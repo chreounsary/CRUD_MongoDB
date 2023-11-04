@@ -6,9 +6,6 @@ export default function Navbar() {
       <Link className="text-white font-bold" href={"/"}>
         GTCoding.
       </Link>
-      <Link className="bg-white p-2" href={"/addTopic"}>
-        Add Topic
-      </Link>
     </nav>
   );
 }

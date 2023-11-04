@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function AddTopic() {
+export default function AddCategory() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
@@ -18,7 +18,7 @@ export default function AddTopic() {
     }
 
     try {
-      const res = await fetch("http:/localhost/:3000/api/topics", {
+      const res = await fetch("http://localhost:3000/api/category", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -27,9 +27,9 @@ export default function AddTopic() {
       });
 
       if (res.ok) {
-        router.push("/");
+        router.push("/dashboard/category");
       } else {
-        throw new Error("Failed to create a topic");
+        throw new Error("Failed to create a Category");
       }
     } catch (error) {
       console.log(error);
@@ -43,7 +43,7 @@ export default function AddTopic() {
         value={title}
         className="border border-slate-500 px-8 py-2"
         type="text"
-        placeholder="Topic Title"
+        placeholder="Category Title"
       />
 
       <input
@@ -51,14 +51,14 @@ export default function AddTopic() {
         value={description}
         className="border border-slate-500 px-8 py-2"
         type="text"
-        placeholder="Topic Description"
+        placeholder="Category Description"
       />
 
       <button
         type="submit"
         className="bg-green-600 font-bold text-white py-3 px-6 w-fit"
       >
-        Add Topic
+        Add Category
       </button>
     </form>
   );
