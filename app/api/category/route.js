@@ -12,7 +12,7 @@ export async function POST(request) {
 export async function GET() {
   await connectMongoDB();
   const category = await Category.find();
-  return NextResponse.json({ category });
+  return NextResponse.json(category);
 }
 
 export async function DELETE(request) {

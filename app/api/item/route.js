@@ -3,17 +3,31 @@ import Item from "@/models/item";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
-  const { title, description } = await request.json();
+  const { title, description, categoryId } = await request.json();
   await connectMongoDB();
-  await Item.create({ title, description });
-  return NextResponse.json({ message: "Item Created" }, { status: 201 });
+  await Item.create({ title, description, categoryId });
+  return NextResponse.json({ message: "Item Created", category: categoryId }, { status: 201 });
 }
 
 export async function GET() {
+
   await connectMongoDB();
-  const item = await Item.find();
-  console.log(item, 'item');
-  return NextResponse.json({ item });
+
+  const result = await Item.aggregate([
+    {
+      $lookup: {
+        from: 'categories',
+        localField: 'categoryId',
+        foreignField: '_id',
+        as: 'category',
+      },
+    }
+  ]);
+  console.log(result, 'this is ');
+
+
+  const items = await Item.find();
+  return NextResponse.json({ items });
 }
 
 export async function DELETE(request) {
